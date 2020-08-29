@@ -1,5 +1,5 @@
-Welcome to Sadie: Stochastic Agents in DIscrete time and Euclidean space's documentation!
-======================================
+Welcome to the Sadie documentation
+==================================
 
 .. toctree::
    :maxdepth: 2

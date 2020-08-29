@@ -14,8 +14,6 @@ Sadie: Stochastic Agents in DIscrete time and Euclidean space
         :alt: Documentation Status
 
 
-
-
 Sadie is an agent-based modelling environment for stochastic agents in discrete time in Euclidean space.
 
 
@@ -26,7 +24,7 @@ Sadie is an agent-based modelling environment for stochastic agents in discrete 
 Features
 --------
 
-* TODO
+* Spatial agents, including various random walk agents
 
 Credits
 -------

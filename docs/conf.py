@@ -31,7 +31,10 @@ import sadie
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode']
+extensions = ['sphinx.ext.autodoc',
+              'sphinx.ext.viewcode',
+              'sphinx.ext.githubpages',
+              'sphinx.ext.mathjax']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -46,7 +49,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Sadie: Stochastic Agents in DIscrete time and Euclidean space'
+project = 'Sadie'
 copyright = "2020, Chris von Csefalvay"
 author = "Chris von Csefalvay"
 
@@ -108,7 +111,7 @@ htmlhelp_basename = 'sadiedoc'
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     #
-    # 'papersize': 'letterpaper',
+    'papersize': 'letterpaper',
 
     # The font size ('10pt', '11pt' or '12pt').
     #
@@ -128,7 +131,7 @@ latex_elements = {
 # [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'sadie.tex',
-     'Sadie: Stochastic Agents in DIscrete time and Euclidean space Documentation',
+     'Sadie: Stochastic Agents in Discrete Time and Euclidean Space',
      'Chris von Csefalvay', 'manual'),
 ]
 
@@ -139,7 +142,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     (master_doc, 'sadie',
-     'Sadie: Stochastic Agents in DIscrete time and Euclidean space Documentation',
+     'Sadie: Stochastic Agents in Discrete Time and Euclidean Space',
      [author], 1)
 ]
 
@@ -151,12 +154,9 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'sadie',
-     'Sadie: Stochastic Agents in DIscrete time and Euclidean space Documentation',
+     'Sadie: Stochastic Agents in Discrete Time and Euclidean Space',
      author,
      'sadie',
-     'One line description of project.',
+     'Sadie is an agent-based modelling environment for stochastic agents in discrete time in Euclidean space',
      'Miscellaneous'),
 ]
-
-
-

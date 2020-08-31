@@ -5,8 +5,8 @@ import numpy as np
 
 
 class UniformRandomWalkAgent(TargetableAgent):
-    def __init__(self, x_init: Union[int, float], y_init: Union[int, float], velocity=1, epsilon=1e-4,
-                 r_min: Union[int, float] = 1, r_max: Union[int, float] = 10):
+    def __init__(self, x_init: float, y_init: float, velocity=1, epsilon=1e-4,
+                 r_min: float = 1, r_max: float = 10):
         super(UniformRandomWalkAgent, self).__init__(x_init=x_init,
                                                      y_init=y_init,
                                                      velocity=velocity,
@@ -19,7 +19,7 @@ class UniformRandomWalkAgent(TargetableAgent):
 
 
 class UniformLevyRandomWalkAgent(TargetableAgent):
-    def __init__(self, x_init: Union[int, float], y_init: Union[int, float], velocity=1, epsilon=1e-4):
+    def __init__(self, x_init: float, y_init: float, velocity=1, epsilon=1e-4):
         super(UniformLevyRandomWalkAgent, self).__init__(x_init=x_init,
                                                          y_init=y_init,
                                                          velocity=velocity,
@@ -31,8 +31,8 @@ class UniformLevyRandomWalkAgent(TargetableAgent):
 
 
 class BoundedDistanceLevyRandomWalkAgent(UniformLevyRandomWalkAgent):
-    def __init__(self, x_init: Union[int, float], y_init: Union[int, float], velocity=1, epsilon=1e-4,
-                 mu: Union[int, float] = 100, sigma: Union[int, float] = 12.5):
+    def __init__(self, x_init: float, y_init: float, velocity=1, epsilon=1e-4,
+                 mu: float = 100, sigma: float = 12.5):
         super(UniformLevyRandomWalkAgent, self).__init__(x_init=x_init,
                                                          y_init=y_init,
                                                          velocity=velocity,
@@ -55,11 +55,11 @@ class BoundedDistanceLevyRandomWalkAgent(UniformLevyRandomWalkAgent):
 
 class BoundedDistanceLevyRandomWalkAgentWithWait(BoundedDistanceLevyRandomWalkAgent):
     def __init__(self,
-                 x_init: Union[int, float],
-                 y_init: Union[int, float],
+                 x_init: float,
+                 y_init: float,
                  velocity=1, epsilon=1e-4,
-                 mu: Union[int, float] = 100,
-                 sigma: Union[int, float] = 12.5,
+                 mu: float = 100,
+                 sigma: float = 12.5,
                  rest_transition_probability: float = 0.8):
 
         super(UniformLevyRandomWalkAgent, self).__init__(x_init=x_init,
@@ -90,14 +90,14 @@ class BoundedDistanceLevyRandomWalkAgentWithWait(BoundedDistanceLevyRandomWalkAg
 
 class EnergyDependentLevyAgent(BoundedDistanceLevyRandomWalkAgentWithWait):
     def __init__(self,
-                 x_init: Union[int, float],
-                 y_init: Union[int, float],
+                 x_init: float,
+                 y_init: float,
                  velocity=1, epsilon=1e-4,
-                 mu: Union[int, float] = 100,
-                 sigma: Union[int, float] = 12.5,
-                 mu_energy: Union[int, float] = 100,
-                 sigma_energy: Union[int, float] = 20,
-                 replenishment_rate: Union[int, float] = 10):
+                 mu: float = 100,
+                 sigma: float = 12.5,
+                 mu_energy: float = 100,
+                 sigma_energy: float = 20,
+                 replenishment_rate: float = 10):
 
         super(UniformLevyRandomWalkAgent, self).__init__(x_init=x_init,
                                                          y_init=y_init,

@@ -1,8 +1,10 @@
 from typing import Tuple
 import numpy as np
+from numpy import pi as π
 from sadie.agents.exceptions import NoTargetError
 
 EPSILON: float = 1e-6
+
 
 class TargetingMixin:
     """
@@ -67,10 +69,10 @@ class TargetingMixin:
         :return: distance of the agent from its current target
         :raise NoTargetError: the agent is not targeted
         """
-        if self._target is (None, None):
+        if self._target == (None, None):
             raise NoTargetError
         else:
-            return self.distance_from((self.x, self.y))
+            return self.distance_from((self._target[0], self._target[1]))
 
     @property
     def target_azimuth(self) -> float:
@@ -80,10 +82,14 @@ class TargetingMixin:
         :return: azimuth of the agent towards its current target
         :raise NoTargetError: the agent is not targeted
         """
-        if self._target is (None, None):
+        if self._target == (None, None):
             raise NoTargetError
         else:
-            return np.arctan2(self._target[1] - self.y, self._target[0] - self.x)
+            theta = np.arctan2(self._target[1] - self.y, self._target[0] - self.x)
+            if theta >= 0:
+                return theta
+            else:
+                return 2 * π + theta
 
     @property
     def is_on_target(self) -> bool:
@@ -94,7 +100,7 @@ class TargetingMixin:
         :return: `True` if the object is within the tolerance margin of the target, else `False`
         :raise NoTargetError: the agent is not targeted
         """
-        if self._target is (None, None):
+        if self._target == (None, None):
             raise NoTargetError
         else:
             return self.target_distance <= EPSILON

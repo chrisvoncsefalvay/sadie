@@ -1,7 +1,7 @@
-from typing import Union
 from scipy import stats
 from sadie.agents.spatial import TargetableAgent
 import numpy as np
+from numpy import pi as π
 
 
 class UniformRandomWalkAgent(TargetableAgent):
@@ -122,7 +122,6 @@ class EnergyDependentLevyAgent(BoundedDistanceLevyRandomWalkAgentWithWait):
             self.distance_traveled += self.tgt_distance
             self.energy -= self.tgt_distance
             self.x, self.y = self._target
-
 
     def update(self):
         if self.state == "halted":

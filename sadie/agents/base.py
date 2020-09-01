@@ -1,6 +1,7 @@
 from uuid import uuid4
 from abc import ABC, abstractmethod
 
+
 class AbstractAgent(ABC):
     """
     The `AbstractAgent` class is the abstract base class from which agents in general inherit. The `AbstractAgent`

@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Union, Tuple
+from typing import Tuple
 import numpy as np
 from sadie.agents import AbstractAgent
 from sadie.agents.exceptions import NoTargetError
@@ -27,22 +27,6 @@ class SpatialAgent(AbstractAgent):
         self._y = y_init
 
     @property
-    def position(self) -> Tuple[float, float]:
-        """
-        Returns the position vector of the agent as a tuple :math:`(x, y)`.
-        """
-        return self._x, self._y
-
-    @position.setter
-    def position(self, pos: Tuple[float, float]):
-        """
-        Sets agent position to the tuple `pos`.
-
-        :param pos: agent position
-        """
-        self._x, self._y = pos
-
-    @property
     def x(self):
         """
         Returns the x coordinate of the agent. Equivalent to `self.position()[0]`.
@@ -66,6 +50,22 @@ class SpatialAgent(AbstractAgent):
         raise ValueError("Cannot set y coordinate directly. Use either a movement method or set the position using the "
                          "`position` setter.")
 
+    @property
+    def position(self) -> Tuple[float, float]:
+        """
+        Returns the position vector of the agent as a tuple :math:`(x, y)`.
+        """
+        return self.x, self.y
+
+    @position.setter
+    def position(self, pos: Tuple[float, float]):
+        """
+        Sets agent position to the tuple `pos`.
+
+        :param pos: agent position
+        """
+        self.x, self.y = pos
+
     def distance_from(self, point: Tuple[float, float]) -> float:
         """
         Returns the agent's distance from an arbitrary point `point` defined as a tuple.
@@ -73,7 +73,7 @@ class SpatialAgent(AbstractAgent):
         :param point: point to which distance is calculated
         :return: distance between the agent's position and the provided point
         """
-        return np.sqrt((self._x - point[0])**2 + (self._y - point[1]) ** 2)
+        return np.sqrt((self.x - point[0])**2 + (self.y - point[1]) ** 2)
 
     def vector_to(self, point: Tuple[float, float]) -> Tuple[float, float]:
         """
@@ -89,6 +89,7 @@ class SpatialAgent(AbstractAgent):
 
     def report(self):
         pass
+
 
 class MovingSpatialAgent(SpatialAgent):
     """
@@ -133,7 +134,7 @@ class MovingSpatialAgent(SpatialAgent):
         self.position = (self.x + np.cos(theta) * r, self.y + np.sin(theta) * r)
 
 
-class TargetableAgent(TargetingMixin, MovingSpatialAgent):
+class TargetableAgent(MovingSpatialAgent, TargetingMixin):
     """
     A `TargetableAgent` is a `MovingSpatialAgent` that has, in addition to its position, a target, which it pursues
     every time it is updated.
@@ -142,6 +143,7 @@ class TargetableAgent(TargetingMixin, MovingSpatialAgent):
     class is not defined.
     """
     def __init__(self, x_init: float, y_init: float, velocity: float = 1.0):
+        super(TargetableAgent, self).__init__(x_init=x_init, y_init=y_init)
         self._velocity = velocity
         self._state = AgentStates.HALTED
 
@@ -175,13 +177,13 @@ class TargetableAgent(TargetingMixin, MovingSpatialAgent):
         """
         Moves agent along to its target.
         """
-        if self.target is (None, None):
+        if self.target == (None, None):
             raise NoTargetError
         else:
             self.state = AgentStates.MOVING
             if self.target_distance < self.velocity:
                 self.distance_traveled += self.target_distance
-                self.move_to(self.target)
+                self.move_to(*self.target)
             else:
                 self.move_p(self.target_azimuth, self.velocity)
 
@@ -201,8 +203,8 @@ class TargetableAgent(TargetingMixin, MovingSpatialAgent):
                 "y": self.y,
                 "tx": self.target[0],
                 "ty": self.target[1],
-                "ta": self.target_azimuth,
-                "tr": self.target_distance,
+                "ta": self.target_azimuth if self.target[0] else None,
+                "tr": self.target_distance if self.target[0] else None,
                 "d": self.distance_traveled,
                 "st": self.state}
 

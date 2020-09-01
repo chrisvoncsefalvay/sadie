@@ -1,10 +1,10 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 import pandas as pd
 from sadie.agents import AbstractAgent
 
 
 class AbstractModel(ABC):
-    def __init__(self, init_time:int = 0, max_time:int = 100, *args, **kwargs):
+    def __init__(self, init_time: int = 0, max_time: int = 100, *args, **kwargs):
         self.init_time: int = init_time
         self.max_time: int = max_time
         self._time = self.init_time

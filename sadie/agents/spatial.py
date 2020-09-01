@@ -64,7 +64,7 @@ class SpatialAgent(AbstractAgent):
 
         :param pos: agent position
         """
-        self.x, self.y = pos
+        self._x, self._y = pos
 
     def distance_from(self, point: Tuple[float, float]) -> float:
         """

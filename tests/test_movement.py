@@ -4,6 +4,7 @@ from random import randint, random
 import numpy as np
 from numpy import pi as π
 
+
 class TestMovingSpatialAgent(unittest.TestCase):
     def test_odometer(self):
         agent = MovingSpatialAgent(randint(-100, 100), randint(-100, 100))
@@ -50,4 +51,3 @@ class TestMovingSpatialAgent(unittest.TestCase):
         for i, j in zip(thetas, rs):
             agent.move_p(i, j)
         self.assertAlmostEqual(agent.distance_traveled, rs.sum())
-

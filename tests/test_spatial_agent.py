@@ -4,6 +4,7 @@ from random import randint
 import numpy as np
 from numpy import pi as π
 
+
 class TestSpatialAgent(unittest.TestCase):
     def setUp(self) -> None:
         self.xinit, self.yinit = randint(-100, 100), randint(-100, 100)
@@ -11,7 +12,7 @@ class TestSpatialAgent(unittest.TestCase):
 
     def test_position(self):
         self.assertEqual(self.agent.position, (self.xinit, self.yinit),
-                          msg="Agent does not return the correct initial position without operations.")
+                         msg="Agent does not return the correct initial position without operations.")
 
     def test_x(self):
         self.assertEqual(self.agent.x, self.agent.position[0])

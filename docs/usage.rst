@@ -11,6 +11,10 @@ Using pre-defined objects
 Sadie comes fully loaded with a range of objects that can provide for a wide range of use cases. These can be directly
 instantiated and used.
 
+* `Agent`s are basic elements of agent-based models.
+* `Walker`s are agents that implement various random walk patterns, including having their own state and conditionality.
+* `Forager`s are special walkers that alter their behaviour as a function of their environment.
+
 Creating your own objects
 -------------------------
 

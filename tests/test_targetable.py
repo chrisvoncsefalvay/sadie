@@ -3,6 +3,7 @@ from random import randint
 import numpy as np
 from numpy import pi as π
 from sadie.agents.spatial import TargetableAgent, AgentStates
+from sadie.agents.exceptions import NoTargetError
 
 
 class TestTargetable(unittest.TestCase):
@@ -29,6 +30,34 @@ class TestTargetable(unittest.TestCase):
         self.assertEqual(a.x, 1)
         self.assertEqual(a.y, 0)
         self.assertEqual(a.distance_traveled, 1)
+
+    def test_velocity_dependent_distance_reach(self):
+        a = TargetableAgent(0, 0, velocity=0.5)
+        a.set_polar_target(0, 2)
+        self.assertFalse(a.is_on_target)
+        a.move()
+        self.assertFalse(a.is_on_target)
+        a.move()
+        self.assertFalse(a.is_on_target)
+        a.move()
+        self.assertTrue(a.is_on_target)
+
+    def test_target_error(self):
+        a = TargetableAgent(0, 0)
+        with self.assertRaises(NoTargetError, msg="Moving an untargeted TargetableAgent should raise a NoTargetError."):
+            a.move()
+
+        with self.assertRaises(NoTargetError, msg="An untargeted TargetableAgent's target_distance property should "
+                                                  "raise a NoTargetError."):
+            a.target_distance()
+
+        with self.assertRaises(NoTargetError, msg="An untargeted TargetableAgent's target_azimuth property should "
+                                                  "raise a NoTargetError."):
+            a.target_azimuth()
+
+        with self.assertRaises(NoTargetError, msg="An untargeted TargetableAgent's is_on_target property should raise "
+                                                  "a NoTargetError."):
+            a.is_on_target()
 
     def test_report(self):
         ax, ay, dx, dy, tx, ty = np.random.uniform(-100, 100, 6)

@@ -40,6 +40,8 @@ class TestTargetable(unittest.TestCase):
         a.move()
         self.assertFalse(a.is_on_target)
         a.move()
+        self.assertFalse(a.is_on_target)
+        a.move()
         self.assertTrue(a.is_on_target)
 
     def test_target_error(self):

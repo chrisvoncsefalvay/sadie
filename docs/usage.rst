@@ -20,7 +20,7 @@ Changing azimuth and distance distributions
 To create your own objects, subclass the closest base class and add your own desired functionality. Consider, for
 instance, the way the Uniform-Lévy walker is constructed:
 
-.. code-block::
+.. code-block:: python
 
     class UniformLevyRandomWalker(BaseWalker):
         def retarget(self):
@@ -35,7 +35,7 @@ Changing wait/move behaviour
 
 To change wait/move behaviour, e.g. to halt the object, consider overriding its `update()` method:
 
-.. code-block::
+.. code-block:: python
 
     class WaitingUniformWalker(BaseWalker):
         def __init__(self, x_init: float, y_init: float, velocity: float = 1.0, wait_transition_probability: float = 0.4):

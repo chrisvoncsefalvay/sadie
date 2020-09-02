@@ -13,7 +13,7 @@ class BaseWalker(TargetableAgent):
     sensitive behaviour (i.e. it does not react to the space it is moving across), and has a constant velocity.
     """
     def retarget(self):
-        self.set_polar_target(np.random.uniform(0, 2*π), np.random.uniform(1, 100))
+        self.set_polar_target(np.random.uniform(0, 2*π), np.random.randint(1, 100))
 
     def update(self):
         if self.target == (None, None):
@@ -22,6 +22,39 @@ class BaseWalker(TargetableAgent):
             self.retarget()
         else:
             self.move()
+
+
+class WaitingUniformWalker(BaseWalker):
+    def __init__(self, x_init: float, y_init: float, velocity: float = 1.0, wait_transition_probability: float = 0.4):
+        super(WaitingUniformWalker, self).__init__(x_init=x_init, y_init=y_init, velocity=velocity)
+        self.wait_transition_probability = wait_transition_probability
+
+    def update(self):
+        if self.target == (None, None):
+            self.retarget()
+        elif self.is_on_target:
+            if np.random.random() > self.wait_transition_probability:
+                self.retarget()
+            else:
+                self.wait()
+        else:
+            self.move()
+
+
+class UniformLevyRandomWalker(BaseWalker):
+    """
+    The Uniform-Lévy random walker determines its trip distances according to the Lévy distribution
+
+    .. math::
+
+        f(x) =  \\frac{e^{- \\frac{1}{2x}}}{\\sqrt{2\\pi x^3}}
+
+    and the azimuth of each target is drawn from a uniform distribution of :math:`(0, 2\\pi]`.
+    """
+
+    def retarget(self):
+        self.set_polar_target(np.random.uniform(0, 2*π), stats.levy().rvs())
+
 
 # class UniformRandomWalkAgent(TargetableAgent):
 #     def __init__(self, x_init: float, y_init: float, velocity=1, epsilon=1e-4,

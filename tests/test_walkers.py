@@ -1,5 +1,11 @@
 import unittest
+try:
+    import mock
+except ImportError:
+    from unittest import mock
+
 import numpy as np
+from numpy import pi as π
 from sadie.agents.spatial import AgentStates
 from sadie.agents.walkers import BaseWalker
 
@@ -35,6 +41,21 @@ class TestBaseWalker(unittest.TestCase):
         self.assertNotEqual((w.x, w.y), (wx1, wy1), msg="At the second update, the agent must have moved from its "
                                                           "position in the previous state.")
 
-    def test_random_walk_behaviour(self):
+    @mock.patch("numpy.random.uniform", return_value=π)
+    @mock.patch("numpy.random.randint", return_value=4)
+    def test_random_walk_behaviour(self, m_azimuth, m_distance):
         w = BaseWalker(0, 0)
+        self.assertEqual(w.x, 0)
+        self.assertEqual(w.y, 0)
+        self.assertEqual(w.target, (None, None))
+        w.update()
+        self.assertNotEqual(w.target, (None, None))
+        w.update()
+        self.assertEqual(w.target[0], np.cos(π) * 4)
+        self.assertEqual(w.target[1], np.sin(π) * 4)
 
+        for i in range(3):
+            w.update()
+
+        self.assertTrue(w.is_on_target)
+        self.assertEqual(w.distance_traveled, 4)

@@ -1,4 +1,7 @@
+from typing import Optional, Callable
 from scipy import stats
+
+from sadie.agents.exceptions import NoTargetError
 from sadie.agents.spatial import TargetableAgent, AgentStates
 import numpy as np
 from numpy import pi as π
@@ -54,6 +57,31 @@ class UniformLevyRandomWalker(BaseWalker):
 
     def retarget(self):
         self.set_polar_target(np.random.uniform(0, 2*π), stats.levy().rvs())
+
+
+class BoundedUniformLevyRandomWalker(BaseWalker):
+    def __init__(self,
+                 x_init: float,
+                 y_init: float,
+                 velocity: float = 1.0,
+                 wait_transition_probability: Optional[float] = None,
+                 bounding_distribution: stats.rv_continuous = stats.norm,
+                 **kwargs):
+        super(BoundedUniformLevyRandomWalker, self).__init__(x_init=x_init, y_init=y_init, velocity=velocity)
+        self.wait_transition_probability = wait_transition_probability
+        self.bounding_distribution = bounding_distribution
+        self.kwargs = kwargs
+
+    def update(self):
+        if self.target == (None, None):
+            self.retarget()
+        elif self.is_on_target:
+            self.retarget()
+        elif self.trip_distance >= self.bounding_distribution.rvs(**self.kwargs):
+            self.retarget()
+            self.reset_trip_odometer()
+        else:
+            self.move()
 
 
 # class UniformRandomWalkAgent(TargetableAgent):

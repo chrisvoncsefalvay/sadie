@@ -6,8 +6,7 @@ Sadie: Stochastic Agents in DIscrete time and Euclidean space
 .. image:: https://img.shields.io/pypi/v/sadie.svg
         :target: https://pypi.python.org/pypi/sadie
 
-.. image:: https://img.shields.io/travis/chrisvoncsefalvay/sadie.svg
-        :target: https://travis-ci.com/chrisvoncsefalvay/sadie
+.. image:: https://github.com/chrisvoncsefalvay/sadie/workflows/Run%20Tox/badge.svg
 
 .. image:: https://readthedocs.org/projects/sadie/badge/?version=latest
         :target: https://sadie.readthedocs.io/en/latest/?badge=latest

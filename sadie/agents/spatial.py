@@ -101,7 +101,28 @@ class MovingSpatialAgent(SpatialAgent):
     """
     def __init__(self, x_init: float, y_init: float, *args, **kwargs):
         super(MovingSpatialAgent, self).__init__(x_init=x_init, y_init=y_init)
-        self.distance_traveled: float = 0.0
+        self._distance_traveled: float = 0.0
+        self._trip_distance: float = 0.0
+
+    @property
+    def distance_traveled(self):
+        return self._distance_traveled
+
+    @distance_traveled.setter
+    def distance_traveled(self, value):
+        self._distance_traveled = value
+        self._trip_distance = value
+
+    @property
+    def trip_distance(self):
+        return self._trip_distance
+
+    @trip_distance.setter
+    def trip_distance(self, value):
+        raise ValueError("Cannot set trip distance directly.")
+
+    def reset_trip_odometer(self):
+        self._trip_distance = 0.0
 
     def move_to(self, x: float, y: float):
         """

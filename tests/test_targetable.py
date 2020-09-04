@@ -80,8 +80,8 @@ class TestTargetable(unittest.TestCase):
         a.set_polar_target(theta, r)
 
         # Now that the target has been set, we expect it to show up in the targeting report.
-        self.assertEqual(a.report()["x"], ax, msg="Targeting should not change the x coordinate of the agent.")
-        self.assertEqual(a.report()["y"], ay, msg="Targeting should not change the x coordinate of the agent.")
+        self.assertAlmostEqual(a.report()["x"], ax, msg="Targeting should not change the x coordinate of the agent.")
+        self.assertAlmostEqual(a.report()["y"], ay, msg="Targeting should not change the x coordinate of the agent.")
         self.assertAlmostEqual(a.report()["tx"], ax + r * np.cos(theta))
         self.assertAlmostEqual(a.report()["ty"], ay + r * np.sin(theta))
         self.assertAlmostEqual(a.report()["ta"], theta, msg=f"Angle for a polar angle movement of {theta},{r} should be"
@@ -96,11 +96,11 @@ class TestTargetable(unittest.TestCase):
 
         # We have now moved the object. Our report should now have the same target, but at an advanced location, in a
         # moving state and having recorded a distance.
-        self.assertEqual(a.report()["x"], ax + np.cos(theta), msg=f"After the first movement, the agent's x "
+        self.assertAlmostEqual(a.report()["x"], ax + np.cos(theta), msg=f"After the first movement, the agent's x "
                                                                   f"coordinate should be {np.cos(theta)} away from "
                                                                   f"its origin (i.e. at {ax + np.cos(theta)} given an "
                                                                   f"origin of {ax}.")
-        self.assertEqual(a.report()["y"], ay + np.sin(theta), msg=f"After the first movement, the agent's y "
+        self.assertAlmostEqual(a.report()["y"], ay + np.sin(theta), msg=f"After the first movement, the agent's y "
                                                                   f"coordinate should be {np.sin(theta)} away from "
                                                                   f"its origin (i.e. at {ay + np.sin(theta)} given an "
                                                                   f"origin of {ay}.")

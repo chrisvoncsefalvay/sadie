@@ -15,7 +15,7 @@ class TestMovingSpatialAgent(unittest.TestCase):
         self.assertEqual(agent.distance_traveled, 2)
         xoffs, yoffs = randint(-100, 100) * random(), randint(-100, 100) * random()
         agent.move_by(xoffs, yoffs)
-        self.assertEqual(agent.distance_traveled, 2 + np.sqrt(xoffs ** 2 + yoffs ** 2))
+        self.assertAlmostEqual(agent.distance_traveled, 2 + np.sqrt(xoffs ** 2 + yoffs ** 2))
 
     def test_move_to(self):
         xinit, yinit, xdelta, ydelta = randint(-100, 100), \
@@ -33,16 +33,16 @@ class TestMovingSpatialAgent(unittest.TestCase):
                                        randint(-100, 100) * random()
         agent = MovingSpatialAgent(x_init=xinit, y_init=yinit)
         agent.move_by(xdelta, ydelta)
-        self.assertEqual(agent.position, (xinit + xdelta, yinit + ydelta))
-        self.assertEqual(agent.distance_traveled, np.sqrt(xdelta ** 2 + ydelta ** 2))
+        self.assertAlmostEqual(agent.position, (xinit + xdelta, yinit + ydelta))
+        self.assertAlmostEqual(agent.distance_traveled, np.sqrt(xdelta ** 2 + ydelta ** 2))
 
     def test_move_p(self):
         xinit, yinit = randint(-100, 100), randint(-100, 100)
         theta, r = np.random.uniform(0, 2*π), randint(-100, 100)
         agent = MovingSpatialAgent(x_init=xinit, y_init=yinit)
         agent.move_p(theta, r)
-        self.assertEqual(agent.position, (xinit + np.cos(theta) * r, yinit + np.sin(theta) * r))
-        self.assertEqual(agent.distance_traveled, r)
+        self.assertAlmostEqual(agent.position, (xinit + np.cos(theta) * r, yinit + np.sin(theta) * r))
+        self.assertAlmostEqual(agent.distance_traveled, r)
 
     def test_successive_move_accumulation_in_odometer(self):
         xinit, yinit = randint(-100, 100), randint(-100, 100)

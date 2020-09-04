@@ -51,11 +51,11 @@ class TestBaseWalker(unittest.TestCase):
         w.update()
         self.assertNotEqual(w.target, (None, None))
         w.update()
-        self.assertEqual(w.target[0], np.cos(π) * 4)
-        self.assertEqual(w.target[1], np.sin(π) * 4)
+        self.assertAlmostEqual(w.target[0], np.cos(π) * 4)
+        self.assertAlmostEqual(w.target[1], np.sin(π) * 4)
 
         for i in range(3):
             w.update()
 
         self.assertTrue(w.is_on_target)
-        self.assertEqual(w.distance_traveled, 4)
+        self.assertAlmostEqual(w.distance_traveled, 4)

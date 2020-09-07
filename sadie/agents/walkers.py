@@ -60,16 +60,19 @@ class UniformLevyRandomWalker(BaseWalker):
 
 
 class BoundedUniformLevyRandomWalker(BaseWalker):
+    """
+    The bounded Uniform-Lévy random walker uses a bounding distribution (by default, the normal distribution) to
+    determine whether a trip of a given distance should be aborted.
+    """
     def __init__(self,
                  x_init: float,
                  y_init: float,
                  velocity: float = 1.0,
-                 wait_transition_probability: Optional[float] = None,
                  bounding_distribution: stats.rv_continuous = stats.norm,
+                 scale_factor: float = 1,
                  **kwargs):
         super(BoundedUniformLevyRandomWalker, self).__init__(x_init=x_init, y_init=y_init, velocity=velocity)
-        self.wait_transition_probability = wait_transition_probability
-        self.bounding_distribution = bounding_distribution
+        self.bounding_distribution, self.scale_factor = bounding_distribution, scale_factor
         self.kwargs = kwargs
 
     def update(self):
@@ -77,7 +80,7 @@ class BoundedUniformLevyRandomWalker(BaseWalker):
             self.retarget()
         elif self.is_on_target:
             self.retarget()
-        elif self.trip_distance >= self.bounding_distribution.rvs(**self.kwargs):
+        elif self.trip_distance >= self.scale_factor * self.bounding_distribution(**self.kwargs).rvs():
             self.retarget()
             self.reset_trip_odometer()
         else:

@@ -1,6 +1,6 @@
 from abc import ABC
 from enum import Enum
-from typing import Iterable, Type
+from typing import Iterable, Type, List
 import pandas as pd
 from sadie.agents import AbstractAgent
 from sadie.models.exceptions import ModelRunNotCompletedError
@@ -10,6 +10,7 @@ class ModelStatus(Enum):
     NOT_RUN = 0
     RUNNING = 1
     DONE = 2
+
 
 class AbstractModel(ABC):
     """
@@ -46,11 +47,11 @@ class AbstractModel(ABC):
             self._agents.append(agent)
 
     @property
-    def agents(self) -> list[Type[AbstractAgent]]:
+    def agents(self) -> List[AbstractAgent]:
         """
-        Returns the list of agents currently within the model.
+        Returns the list of agents currently within the model's population.
 
-        :return:
+        :return: list of agents currently within the model's population.
         """
         return self._agents
 
@@ -76,7 +77,7 @@ class AbstractModel(ABC):
         """
         Returns the current state of the model.
 
-        :return:
+        :return: current model state
         """
         return self._state
 

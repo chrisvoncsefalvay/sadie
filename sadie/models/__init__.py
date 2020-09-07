@@ -1,3 +1,3 @@
 from sadie.models.base import *  # noqa
-from sadie.models import *  # noqa
-from sadie.exceptions import *
+from sadie.models.simple import *  # noqa
+from sadie.models.exceptions import *

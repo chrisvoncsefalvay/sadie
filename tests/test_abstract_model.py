@@ -1,6 +1,7 @@
 import unittest
 import numpy as np
-from sadie.models import simple, ModelStatus, AbstractAgent
+from sadie.models import simple
+from sadie.models.base import ModelStatus
 from sadie.agents.spatial import SpatialAgent
 
 class AbstractModelFunctionalityTest(unittest.TestCase):

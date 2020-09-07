@@ -1,14 +1,18 @@
 Welcome to the Sadie documentation
 ==================================
 
+Sadie is a framework for the quick, efficient creation of agent-based models in mobility research, epidemiology and a
+range of other fields.
+
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 3
+   :caption: Table of Contents
 
    readme
    installation
    usage
-   modules
+   walkers
+   The Sadie API <modules>
    contributing
    authors
    history

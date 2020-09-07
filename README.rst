@@ -6,6 +6,9 @@ Sadie: Stochastic Agents in DIscrete time and Euclidean space
 .. image:: https://img.shields.io/pypi/v/sadie.svg
         :target: https://pypi.python.org/pypi/sadie
 
+.. image:: https://zenodo.org/badge/291175788.svg
+   :target: https://zenodo.org/badge/latestdoi/291175788
+
 .. image:: https://github.com/chrisvoncsefalvay/sadie/workflows/Run%20Tox/badge.svg
         :target: https://github.com/chrisvoncsefalvay/sadie/workflows/Run%20Tox/
         :alt: Tox check status

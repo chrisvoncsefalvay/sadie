@@ -13,6 +13,9 @@ Sadie: Stochastic Agents in DIscrete time and Euclidean space
         :target: https://github.com/chrisvoncsefalvay/sadie/workflows/Run%20Tox/
         :alt: Tox check status
 
+.. image:: https://travis-ci.org/chrisvoncsefalvay/sadie.svg?branch=master
+    :target: https://travis-ci.org/chrisvoncsefalvay/sadie
+
 .. image:: https://readthedocs.org/projects/sadie/badge/?version=latest
         :target: https://sadie.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status

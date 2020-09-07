@@ -84,160 +84,61 @@ class BoundedUniformLevyRandomWalker(BaseWalker):
             self.move()
 
 
-# class UniformRandomWalkAgent(TargetableAgent):
-#     def __init__(self, x_init: float, y_init: float, velocity=1, epsilon=1e-4,
-#                  r_min: float = 1, r_max: float = 10):
-#         super(UniformRandomWalkAgent, self).__init__(x_init=x_init,
-#                                                      y_init=y_init,
-#                                                      velocity=velocity,
-#                                                      epsilon=epsilon)
-#         self.r_min, self.r_max = r_min, r_max
-#
-#     def retarget(self):
-#         theta, r = np.random.uniform(0, 2 * π), np.random.uniform(self.r_min, self.r_max)
-#         self.set_polar_target(theta, r)
-#
-#
-# class UniformLevyRandomWalkAgent(TargetableAgent):
-#     def __init__(self, x_init: float, y_init: float, velocity=1, epsilon=1e-4):
-#         super(UniformLevyRandomWalkAgent, self).__init__(x_init=x_init,
-#                                                          y_init=y_init,
-#                                                          velocity=velocity,
-#                                                          epsilon=epsilon)
-#
-#     def retarget(self):
-#         theta, r = np.random.uniform(0, 2 * π), stats.levy().rvs()
-#         self.set_polar_target(theta, r)
-#
-#
-# class BoundedDistanceLevyRandomWalkAgent(UniformLevyRandomWalkAgent):
-#     def __init__(self, x_init: float, y_init: float, velocity=1, epsilon=1e-4,
-#                  mu: float = 100, sigma: float = 12.5):
-#         super(UniformLevyRandomWalkAgent, self).__init__(x_init=x_init,
-#                                                          y_init=y_init,
-#                                                          velocity=velocity,
-#                                                          epsilon=epsilon)
-#         self.mu, self.sigma = mu, sigma
-#
-#     def update(self):
-#         if self.is_targeted:
-#             if self.on_target:
-#                 self.retarget()
-#                 self.move()
-#             else:
-#                 if self.distance_traveled > stats.norm(self.mu, self.sigma).rvs():
-#                     self.retarget()
-#                     self.distance_traveled = 0
-#                 self.move()
-#         else:
-#             self.retarget()
-#
-#
-# class BoundedDistanceLevyRandomWalkAgentWithWait(BoundedDistanceLevyRandomWalkAgent):
-#     def __init__(self,
-#                  x_init: float,
-#                  y_init: float,
-#                  velocity=1, epsilon=1e-4,
-#                  mu: float = 100,
-#                  sigma: float = 12.5,
-#                  rest_transition_probability: float = 0.8):
-#
-#         super(UniformLevyRandomWalkAgent, self).__init__(x_init=x_init,
-#                                                          y_init=y_init,
-#                                                          velocity=velocity,
-#                                                          epsilon=epsilon)
-#         self.mu, self.sigma = mu, sigma
-#         self.rtp = rest_transition_probability
-#
-#     def wait(self):
-#         if stats.uniform(0, 1).rvs() > self.rtp:
-#             self.retarget()
-#
-#     def update(self):
-#         if self.is_targeted:
-#             if self.on_target:
-#                 self.wait()
-#             else:
-#                 if self.distance_traveled > stats.norm(self.mu, self.sigma).rvs():
-#                     self._target = [self.x, self.y]
-#                     self.distance_traveled = 0
-#                     self.wait()
-#                 else:
-#                     self.move()
-#         else:
-#             self.retarget()
-#
-#
-# class EnergyDependentLevyAgent(BoundedDistanceLevyRandomWalkAgentWithWait):
-#     def __init__(self,
-#                  x_init: float,
-#                  y_init: float,
-#                  velocity=1, epsilon=1e-4,
-#                  mu: float = 100,
-#                  sigma: float = 12.5,
-#                  mu_energy: float = 100,
-#                  sigma_energy: float = 20,
-#                  replenishment_rate: float = 10):
-#
-#         super(UniformLevyRandomWalkAgent, self).__init__(x_init=x_init,
-#                                                          y_init=y_init,
-#                                                          velocity=velocity,
-#                                                          epsilon=epsilon)
-#         self.mu, self.sigma = mu, sigma
-#         self.maximum_energy = stats.norm(self.mu, self.sigma).rvs()
-#         self.replenishment_rate = replenishment_rate
-#         self.energy = self.maximum_energy
-#         self.state = "halted"
-#
-#     def wait(self):
-#         self.energy += self.maximum_energy / self.replenishment_rate
-#
-#     def move(self):
-#         if self.tgt_distance > self.velocity:
-#             self.x += np.cos(self.heading) * self.velocity
-#             self.y += np.sin(self.heading) * self.velocity
-#             self.distance_traveled += self.velocity
-#             self.energy -= self.velocity
-#         else:
-#             self.distance_traveled += self.tgt_distance
-#             self.energy -= self.tgt_distance
-#             self.x, self.y = self._target
-#
-#     def update(self):
-#         if self.state == "halted":
-#             self.retarget()
-#             self.move()
-#             self.state = "moving"
-#         elif self.is_targeted:
-#             if self.on_target:
-#                 self.wait()
-#                 if self.energy >= 0.4 * self.maximum_energy:
-#                     self.retarget()
-#             else:
-#                 if self.distance_traveled > stats.norm(self.mu, self.sigma).rvs():
-#                     self._target = [self.x, self.y]
-#                     self.distance_traveled = 0
-#                     self.wait()
-#                     self.state = "waiting"
-#                     self.retarget()
-#                 elif self.state == "waiting":
-#                     if self.energy <= self.maximum_energy * 0.8:
-#                         self.wait()
-#                     else:
-#                         self.state = "moving"
-#                         self.move()
-#                 else:
-#                     self.state = "moving"
-#                     self.move()
-#         else:
-#             self.retarget()
-#
-#     def report(self):
-#         return {"id": self.id,
-#                 "x": self.x,
-#                 "y": self.y,
-#                 "energy": self.energy,
-#                 "efrac": self.energy/self.maximum_energy,
-#                 "state": self.state,
-#                 "d": self.tgt_distance,
-#                 "trip_length": self.distance_traveled}
+class HomesickLevyWalker(BaseWalker):
+    """
+    Implements the Homesick Lévy walk described by `Fujihara and Miwa (2014) <https://arxiv.org/abs/1408.0427>`_. This
+    walk has a home location, to which the walker returns, and a homesick probability :math:`\\alpha`, which describes
+    the likelihood that the agent will set its home point as the next target.
+
+    Note that this follows the Fujihara and Miwa paper's conceptualisation of homesickness, i.e. a turn to the home
+    location is only possible at the end of a trip. Therefore, given :math:`\\alpha`, a walker will make `\\alpha^{-1}`
+    trips before setting course for its home location. For a Lévy walker that can abandon a trip in progress, try
+    `RapidHomesickLevyWalker`.
+    """
+    def __init__(self, x_init: float, y_init: float, velocity: float = 1.0, alpha: float = 0.2):
+        super(HomesickLevyWalker, self).__init__(x_init=x_init, y_init=y_init, velocity=velocity)
+        self.home_x, self.home_y = x_init, y_init
+        self.alpha = alpha
+
+    def update(self):
+        if self.target == (None, None):
+            self.retarget()
+        elif self.is_on_target:
+            if np.random.random() > self.alpha:
+                self.retarget()
+            else:
+                self.set_absolute_target(self.home_x, self.home_y)
+        else:
+            self.move()
+
+
+class RapidHomesickLevyWalker(BaseWalker):
+    """
+    Implements a variant of the Homesick Lévy walk described by `Fujihara and Miwa (2014)
+    <https://arxiv.org/abs/1408.0427>`_ implemented in `HomesickLevyWalker`. Like the original `HomesickLevyWalker`,
+    the `RapidHomesickLevyWalker` is executing a homesick Lévy walk around its point of origin. Unlike the original
+    `HomesickLevyWalker`, however, the `RapidHomesickLevyWalker` determines whether to retarget for home not every time
+    it has reached a location but at every movement step. Consequently, the meaning of `\\alpha` is different:
+    a walker will travel a distance of `\\alpha^{-1}` before setting course for its home location.
+    """
+    def __init__(self, x_init: float, y_init: float, velocity: float = 1.0, alpha: float = 0.2):
+        super(RapidHomesickLevyWalker, self).__init__(x_init=x_init, y_init=y_init, velocity=velocity)
+        self.home_x, self.home_y = x_init, y_init
+        self.alpha = alpha
+
+    def update(self):
+        if self.target == (None, None):
+            self.retarget()
+        elif self.is_on_target:
+            if np.random.random() > self.alpha:
+                self.retarget()
+            else:
+                self.set_absolute_target(self.home_x, self.home_y)
+        else:
+            if self.target == (self.home_x, self.home_y):
+                self.move()
+            else:
+                if np.random.random() > self.alpha:
+                    self.move()
+                else:
+                    self.set_absolute_target(self.home_x, self.home_y)

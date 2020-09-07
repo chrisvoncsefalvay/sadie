@@ -9,18 +9,6 @@ Subpackages
     sadie.agents
     sadie.models
 
-Submodules
-----------
-
-sadie.sadie module
-------------------
-
-.. automodule:: sadie.sadie
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
 Module contents
 ---------------
 

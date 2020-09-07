@@ -1,8 +1,5 @@
-from typing import Optional, Callable
 from scipy import stats
-
-from sadie.agents.exceptions import NoTargetError
-from sadie.agents.spatial import TargetableAgent, AgentStates
+from sadie.agents.spatial import TargetableAgent
 import numpy as np
 from numpy import pi as π
 

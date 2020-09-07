@@ -19,6 +19,10 @@ Sadie: Stochastic Agents in DIscrete time and Euclidean space
 .. image:: https://readthedocs.org/projects/sadie/badge/?version=latest
         :target: https://sadie.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
+        
+.. image:: https://www.codefactor.io/repository/github/chrisvoncsefalvay/sadie/badge
+       :target: https://www.codefactor.io/repository/github/chrisvoncsefalvay/sadie
+       :alt: CodeFactor
 
 .. image:: https://img.shields.io/github/license/chrisvoncsefalvay/sadie   
         :alt: GitHub

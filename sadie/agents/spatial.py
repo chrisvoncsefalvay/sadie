@@ -227,7 +227,8 @@ class TargetableAgent(MovingSpatialAgent, TargetingMixin):
                 "ta": self.target_azimuth if self.target[0] else None,
                 "tr": self.target_distance if self.target[0] else None,
                 "d": self.distance_traveled,
-                "st": self.state}
+                "st": self.state,
+                "td": self.trip_distance}
 
     def update(self):
         pass

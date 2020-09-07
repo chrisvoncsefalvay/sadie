@@ -2,7 +2,7 @@ from abc import ABC
 from enum import Enum
 from typing import Iterable, Type, List
 import pandas as pd
-from sadie.agents import AbstractAgent
+from sadie.agents.base import AbstractAgent
 from sadie.models.exceptions import ModelRunNotCompletedError
 
 

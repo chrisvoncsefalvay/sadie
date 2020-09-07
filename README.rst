@@ -17,10 +17,8 @@ Sadie: Stochastic Agents in DIscrete time and Euclidean space
         :target: https://sadie.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://img.shields.io/github/license/chrisvoncsefalvay/sadie
-        :target: https://github.com/chrisvoncsefalvay/sadie/LICENSE
+.. image:: https://img.shields.io/github/license/chrisvoncsefalvay/sadie   
         :alt: GitHub
-
 
 Sadie is an agent-based modelling environment for stochastic agents in discrete time in Euclidean space. It is intended
 to serve as a simple, convenient replacement for more complex agent-based modelling frameworks such as Repast and Mesa

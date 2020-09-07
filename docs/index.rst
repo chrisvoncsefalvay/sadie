@@ -9,6 +9,7 @@ Documentation
 
    installation
    usage
+   examples
    walkers
    The Sadie API <modules>
    contributing

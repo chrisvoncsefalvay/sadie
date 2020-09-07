@@ -1,7 +1,8 @@
 from scipy import stats
-from sadie.agents.spatial import TargetableAgent
 import numpy as np
 from numpy import pi as π
+from sadie.agents.exceptions import NoTargetError
+from sadie.agents.spatial import TargetableAgent, AgentStates
 
 
 class BaseWalker(TargetableAgent):
@@ -77,12 +78,12 @@ class BoundedUniformLevyRandomWalker(BaseWalker):
             self.retarget()
         elif self.is_on_target:
             self.retarget()
-        elif self.trip_distance >= self.scale_factor * self.bounding_distribution(**self.kwargs).rvs():
-            self.retarget()
             self.reset_trip_odometer()
         else:
             self.move()
 
+    def retarget(self):
+        self.set_polar_target(np.random.uniform(0, 2*π), self.scale_factor * self.bounding_distribution(**self.kwargs).rvs())
 
 class HomesickLevyWalker(BaseWalker):
     """

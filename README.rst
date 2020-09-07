@@ -13,6 +13,9 @@ Sadie: Stochastic Agents in DIscrete time and Euclidean space
         :target: https://github.com/chrisvoncsefalvay/sadie/workflows/Run%20Tox/
         :alt: Tox check status
 
+.. image:: https://travis-ci.org/chrisvoncsefalvay/sadie.svg?branch=master
+    :target: https://travis-ci.org/chrisvoncsefalvay/sadie
+
 .. image:: https://readthedocs.org/projects/sadie/badge/?version=latest
         :target: https://sadie.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
@@ -43,5 +46,8 @@ Credits
 
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 
+`Sadie` is named after Dickin medal winner Sadie_, an explosives detection dog who saved hundreds of lives when detecting a secondary explosive charge after a bombing outside UN Headquarters, Kabul, Afghanistan, in November 2005. 
+
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _Sadie: https://en.wikipedia.org/wiki/Sadie_(dog)

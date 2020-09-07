@@ -43,5 +43,8 @@ Credits
 
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 
+`Sadie` is named after Dickin medal winner Sadie_, an explosives detection dog who saved hundreds of lives when detecting a secondary explosive charge after a bombing outside UN Headquarters, Kabul, Afghanistan, in November 2005. 
+
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _Sadie: https://en.wikipedia.org/wiki/Sadie_(dog)

@@ -7,6 +7,9 @@ from sadie.models.exceptions import ModelRunNotCompletedError
 
 
 class ModelStatus(Enum):
+    """
+    Enumeration for model run statuses.
+    """
     NOT_RUN = 0
     RUNNING = 1
     DONE = 2

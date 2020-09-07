@@ -11,9 +11,9 @@ Using pre-defined objects
 Sadie comes fully loaded with a range of objects that can provide for a wide range of use cases. These can be directly
 instantiated and used.
 
-* `Agent`s are basic elements of agent-based models.
-* `Walker`s are agents that implement various random walk patterns, including having their own state and conditionality.
-* `Forager`s are special walkers that alter their behaviour as a function of their environment.
+* `Agent` objects are basic elements of agent-based models.
+* `Walker` objects are agents that implement various random walk patterns, including having their own state and conditionality.
+* `Forager` objects are special walkers that alter their behaviour as a function of their environment.
 
 Creating your own objects
 -------------------------
@@ -61,3 +61,17 @@ Here, we override the `__init__()` method first, adding a new parameter to it to
 probability. We assign this to a field, then, overriding the `update()` method, we provide a checkpoint: once an agent
 is on target and due for re-targeting, we insert a random value condition whereby a random float must exceed the
 pre-defined `wait_transition_probability`.
+
+
+Creating new trackable values
+.............................
+
+To track other values, e.g. energy, you can create new class attributes by subclassing your `Agent` or `Walker`, then
+creating a new entry after invoking the `super()` call:
+
+.. code-block:: python
+
+        class EnergyTrackingWalker(BaseWalker):
+            def __init__(self, x_init: float, y_init: float, velocity: float = 1.0):
+                super(WaitingUniformWalker, self).__init__(x_init=x_init, y_init=y_init, velocity=velocity)
+                self.energy: float = 0.0

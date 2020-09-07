@@ -1,14 +1,16 @@
-Welcome to the Sadie documentation
-==================================
+.. include:: ../README.rst
+
+
+Documentation
+-------------
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 3
 
-   readme
    installation
    usage
-   modules
+   walkers
+   The Sadie API <modules>
    contributing
    authors
    history

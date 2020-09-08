@@ -7,7 +7,7 @@ except ImportError:
 import numpy as np
 from numpy import pi as π
 from sadie.agents.spatial import AgentStates
-from sadie.agents.walkers import BaseWalker
+from sadie.agents.walkers import BaseWalker, WaitingUniformWalker
 
 
 class TestBaseWalker(unittest.TestCase):
@@ -59,3 +59,18 @@ class TestBaseWalker(unittest.TestCase):
 
         self.assertTrue(w.is_on_target)
         self.assertAlmostEqual(w.distance_traveled, 4)
+
+
+class TestWaitingUniformWalker(unittest.TestCase):
+    def test_always_stopping_behaviour(self):
+        w = WaitingUniformWalker(0, 0, wait_transition_probability=1)
+        for i in range(100):
+            w.update()
+        self.assertEqual(w.state, AgentStates.WAITING)
+
+    def test_never_stopping_behaviour(self):
+        w = WaitingUniformWalker(0, 0, wait_transition_probability=0)
+        for i in range(1000):
+            w.update()
+            if w.is_on_target:
+                self.assertNotEqual(w.state, AgentStates.WAITING)

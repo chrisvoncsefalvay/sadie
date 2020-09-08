@@ -62,6 +62,6 @@ class TestSpatialAgent(unittest.TestCase):
         agent.move_to(1, 1)
         self.assertAlmostEqual(agent.trip_distance, np.sqrt(2))
 
-        self.reset_trip_odometer()
+        agent.reset_trip_odometer()
 
         self.assertEqual(agent.trip_distance, 0.0)

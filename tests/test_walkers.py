@@ -7,7 +7,8 @@ except ImportError:
 import numpy as np
 from numpy import pi as π
 from sadie.agents.spatial import AgentStates
-from sadie.agents.walkers import BaseWalker, WaitingUniformWalker
+from sadie.agents.walkers import BaseWalker, WaitingUniformWalker, UniformLevyRandomWalker, BoundedUniformLevyRandomWalker, HomesickLevyWalker, RapidHomesickLevyWalker
+from scipy.stats import beta
 
 
 class TestBaseWalker(unittest.TestCase):
@@ -61,7 +62,7 @@ class TestBaseWalker(unittest.TestCase):
         self.assertAlmostEqual(w.distance_traveled, 4)
 
 
-class TestWaitingUniformWalker(unittest.TestCase):
+class TestUniformWalkerBehaviours(unittest.TestCase):
     def test_always_stopping_behaviour(self):
         w = WaitingUniformWalker(0, 0, wait_transition_probability=1)
         for i in range(100):
@@ -93,3 +94,51 @@ class TestWaitingUniformWalker(unittest.TestCase):
 
         self.assertTrue(w.is_on_target)
         self.assertAlmostEqual(w.distance_traveled, 4)
+
+    def test_wait_transition_probability_is_captured(self):
+        wtp = np.random.random()
+        w = WaitingUniformWalker(0, 0, wait_transition_probability=wtp)
+        self.assertEqual(w.wait_transition_probability, wtp)
+
+    def test_retargets_on_no_target(self):
+        w = WaitingUniformWalker(0, 0, wait_transition_probability=np.random.random())
+        self.assertEqual(w.target, (None, None))
+        w.update()
+        self.assertNotEqual(w.target, (None, None))
+
+    @mock.patch("numpy.random.uniform", return_value=π)
+    def test_uniform_levy_walker_retargeting_behaviour(self, azimuth):
+        w = UniformLevyRandomWalker(0, 0)
+        self.assertEqual(w.target, (None, None))
+        w.retarget()
+        self.assertEqual(w.target_azimuth, π)
+
+
+class TestBoundedLevyWalk(unittest.TestCase):
+    def test_retrieve_scale_factor(self):
+        w = BoundedUniformLevyRandomWalker(*np.random.random(2), scale_factor=2)
+        self.assertEqual(w.scale_factor, 2)
+
+    def test_retrieve_distribution(self):
+        w = BoundedUniformLevyRandomWalker(*np.random.random(2), bounding_distribution = beta)
+        self.assertEqual(w.bounding_distribution, beta)
+
+    def test_kwarg_configuration_of_distribution(self):
+        w = BoundedUniformLevyRandomWalker(*np.random.random(2), bounding_distribution = beta, a = 3)
+        self.assertEqual(w.kwargs, {"a": 3})
+
+
+class TestHomesickLevyWalkers(unittest.TestCase):
+    def test_homesick_levy_walker_parametrisation(self):
+        ix, iy, a = np.random.random(3)
+        w = HomesickLevyWalker(x_init=ix, y_init=iy, alpha=a)
+        self.assertEqual(w.home_x, ix)
+        self.assertEqual(w.home_y, iy)
+        self.assertEqual(w.alpha, a)
+
+    def test_rapid_homesick_levy_walker_parametrisation(self):
+        ix, iy, a = np.random.random(3)
+        w = RapidHomesickLevyWalker(x_init=ix, y_init=iy, alpha=a)
+        self.assertEqual(w.home_x, ix)
+        self.assertEqual(w.home_y, iy)
+        self.assertEqual(w.alpha, a)

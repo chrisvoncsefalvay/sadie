@@ -27,6 +27,10 @@ class BaseWalker(TargetableAgent):
 
 
 class WaitingUniformWalker(BaseWalker):
+    """
+    The `WaitingUniformWalker` is a uniform walker with a fixed transition probability. Upon reaching a target, if the
+
+    """
     def __init__(self, x_init: float, y_init: float, velocity: float = 1.0, wait_transition_probability: float = 0.4):
         super(WaitingUniformWalker, self).__init__(x_init=x_init, y_init=y_init, velocity=velocity)
         self.wait_transition_probability = wait_transition_probability

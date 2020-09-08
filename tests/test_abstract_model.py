@@ -2,8 +2,10 @@ import unittest
 import numpy as np
 import pandas as pd
 from sadie.models.exceptions import ModelRunNotCompletedError
-from sadie.models import simple, ModelStatus, AbstractAgent
+from sadie.models import simple
 from sadie.agents.spatial import SpatialAgent
+from sadie.models.base import ModelStatus
+
 
 class AbstractModelFunctionalityTest(unittest.TestCase):
     def setUp(self) -> None:

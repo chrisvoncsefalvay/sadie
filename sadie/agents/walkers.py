@@ -164,7 +164,7 @@ class VariableVelocityWalker(BaseWalker):
 
     def update(self):
         _velocity = self.velocity_distribution(**self.kwargs).rvs()
-        if _velocity > 0:
+        if _velocity >= 0:
             self.velocity = _velocity
         else:
             if self.reflect:

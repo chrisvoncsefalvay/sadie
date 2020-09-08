@@ -1,7 +1,8 @@
 from enum import Enum
 from typing import Tuple
 import numpy as np
-from sadie.agents import AbstractAgent
+
+from sadie.agents.base import AbstractAgent
 from sadie.agents.exceptions import NoTargetError
 from sadie.agents.mixins import TargetingMixin
 

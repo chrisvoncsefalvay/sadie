@@ -1,6 +1,7 @@
 from typing import Tuple
 import numpy as np
 from numpy import pi as π
+
 from sadie.agents.exceptions import NoTargetError
 
 EPSILON: float = 1e-6

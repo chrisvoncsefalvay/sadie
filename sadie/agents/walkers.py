@@ -1,4 +1,3 @@
-from typing import Optional, Callable
 from scipy import stats
 import numpy as np
 from numpy import pi as π

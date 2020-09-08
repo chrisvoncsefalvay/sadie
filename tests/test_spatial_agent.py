@@ -53,7 +53,7 @@ class TestSpatialAgent(unittest.TestCase):
         agent = MovingSpatialAgent(x_init=0, y_init=0)
 
         with self.assertRaises(ValueError):
-            self.trip_distance = 0
+            agent.trip_distance = 0
 
 
     def test_trip_odometer_reset(self):

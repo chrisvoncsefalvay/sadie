@@ -122,5 +122,4 @@ class AbstractModel(ABC):
         """
         if self._state == ModelStatus.DONE:
             return pd.DataFrame.from_dict(self._collector)
-        else:
-            raise ModelRunNotCompletedError
+        raise ModelRunNotCompletedError

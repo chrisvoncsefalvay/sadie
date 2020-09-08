@@ -72,8 +72,7 @@ class TargetingMixin:
         """
         if self._target == (None, None):
             raise NoTargetError
-        else:
-            return self.distance_from((self._target[0], self._target[1]))
+        return self.distance_from((self._target[0], self._target[1]))
 
     @property
     def target_azimuth(self) -> float:
@@ -89,8 +88,7 @@ class TargetingMixin:
             theta = np.arctan2(self._target[1] - self.y, self._target[0] - self.x)
             if theta >= 0:
                 return theta
-            else:
-                return 2 * π + theta
+            return 2 * π + theta
 
     @property
     def is_on_target(self) -> bool:
@@ -103,5 +101,4 @@ class TargetingMixin:
         """
         if self._target == (None, None):
             raise NoTargetError
-        else:
-            return self.target_distance <= EPSILON
+        return self.target_distance <= EPSILON

@@ -201,12 +201,11 @@ class TargetableAgent(MovingSpatialAgent, TargetingMixin):
         """
         if self.target == (None, None):
             raise NoTargetError
+        self.state = AgentStates.MOVING
+        if self.target_distance < self.velocity:
+            self.move_to(*self.target)
         else:
-            self.state = AgentStates.MOVING
-            if self.target_distance < self.velocity:
-                self.move_to(*self.target)
-            else:
-                self.move_p(self.target_azimuth, self.velocity)
+            self.move_p(self.target_azimuth, self.velocity)
 
     def wait(self):
         """

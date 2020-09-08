@@ -74,3 +74,22 @@ class TestWaitingUniformWalker(unittest.TestCase):
             w.update()
             if w.is_on_target:
                 self.assertNotEqual(w.state, AgentStates.WAITING)
+
+    @mock.patch("numpy.random.uniform", return_value=π)
+    @mock.patch("numpy.random.randint", return_value=4)
+    def test_wait_uniform_walk_behaviour(self, m_azimuth, m_distance):
+        w = WaitingUniformWalker(0, 0, wait_transition_probability=0)
+        self.assertEqual(w.x, 0)
+        self.assertEqual(w.y, 0)
+        self.assertEqual(w.target, (None, None))
+        w.update()
+        self.assertNotEqual(w.target, (None, None))
+        w.update()
+        self.assertAlmostEqual(w.target[0], np.cos(π) * 4)
+        self.assertAlmostEqual(w.target[1], np.sin(π) * 4)
+
+        for i in range(3):
+            w.update()
+
+        self.assertTrue(w.is_on_target)
+        self.assertAlmostEqual(w.distance_traveled, 4)

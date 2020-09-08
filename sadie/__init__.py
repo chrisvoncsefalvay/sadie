@@ -2,7 +2,7 @@
 
 __author__ = """Chris von Csefalvay"""
 __email__ = 'chris@chrisvoncsefalvay.com'
-__version__ = '0.1.6'
+__version__ = '0.1.8'
 
 from sadie.models.base import *  # noqa
 from sadie.models.simple import *  # noqa

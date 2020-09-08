@@ -204,7 +204,6 @@ class TargetableAgent(MovingSpatialAgent, TargetingMixin):
         else:
             self.state = AgentStates.MOVING
             if self.target_distance < self.velocity:
-                self.distance_traveled += self.target_distance
                 self.move_to(*self.target)
             else:
                 self.move_p(self.target_azimuth, self.velocity)

@@ -116,3 +116,20 @@ class TestTargetable(unittest.TestCase):
                                                  "one.")
         self.assertEqual(a.report()["st"], AgentStates.MOVING, msg="After the first movement, the agent's state "
                                                                    "should be MOVING")
+
+
+    def test_velocity_setting(self):
+        agent = TargetableAgent(0, 0)
+        agent.velocity = 10
+        self.assertEqual(agent._velocity, 10)
+
+
+    def test_sub_velocity_shifts(self):
+        agent = TargetableAgent(0, 0)
+        distance = np.random.random()
+        agent.set_polar_target(π, distance)
+        self.assertEqual(agent.distance_traveled, 0)
+        self.assertEqual(agent.target_distance, distance)
+        agent.move()
+        self.assertEqual(agent.position, (np.cos(π) * distance, np.sin(π) * distance))
+        self.assertEqual(agent.distance_traveled, distance)

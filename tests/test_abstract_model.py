@@ -1,8 +1,11 @@
 import unittest
 import numpy as np
+import pandas as pd
+from sadie.models.exceptions import ModelRunNotCompletedError
 from sadie.models import simple
-from sadie.models.base import ModelStatus
 from sadie.agents.spatial import SpatialAgent
+from sadie.models.base import ModelStatus
+
 
 class AbstractModelFunctionalityTest(unittest.TestCase):
     def setUp(self) -> None:
@@ -55,3 +58,29 @@ class AbstractModelFunctionalityTest(unittest.TestCase):
         self.assertEqual(m.agents[0].x, rx)
         self.assertEqual(m.agents[0].y, ry)
 
+
+    def test_model_running_status(self):
+        m = simple.SimpleModel()
+        self.assertEqual(m._time, 0)
+        m.run()
+        self.assertEqual(m.state, ModelStatus.DONE)
+        self.assertEqual(m._time, 100)
+
+
+    def test_model_raises_error_on_df_export_if_not_complete(self):
+        m = simple.SimpleModel()
+
+        with self.assertRaises(ModelRunNotCompletedError):
+            m.to_df()
+
+
+    def test_dataframe_export(self):
+        m = simple.SimpleModel()
+        m.run()
+
+        entries = [{"id": 1, "time": i + 1, "x": np.random.random(), "y": np.random.random()} for i in range(100)]
+
+        m._collector = entries
+
+        self.assertIsInstance(m.to_df(), pd.DataFrame)
+        self.assertEqual(m.to_df().time.max(), 100)

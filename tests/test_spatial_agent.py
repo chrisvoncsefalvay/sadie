@@ -1,5 +1,5 @@
 import unittest
-from sadie.agents.spatial import SpatialAgent
+from sadie.agents.spatial import SpatialAgent, MovingSpatialAgent, TargetableAgent
 from random import randint
 import numpy as np
 from numpy import pi as π
@@ -37,3 +37,31 @@ class TestSpatialAgent(unittest.TestCase):
         self.assertEqual(agent.vector_to((0, 1)), (π/2, 1))
         self.assertEqual(agent.vector_to((0, -1)), (-π/2, 1))
         self.assertEqual(agent.vector_to((-1, 0)), (π, 1))
+
+
+    def test_force_set_x_y(self):
+        agent = SpatialAgent(x_init=0, y_init=0)
+
+        with self.assertRaises(ValueError):
+            agent.x = 0
+
+        with self.assertRaises(ValueError):
+            agent.y = 0
+
+
+    def test_force_moving_spatial_agent_trip_distance_setting(self):
+        agent = MovingSpatialAgent(x_init=0, y_init=0)
+
+        with self.assertRaises(ValueError):
+            agent.trip_distance = 0
+
+
+    def test_trip_odometer_reset(self):
+        agent = MovingSpatialAgent(x_init=0, y_init=0)
+
+        agent.move_to(1, 1)
+        self.assertAlmostEqual(agent.trip_distance, np.sqrt(2))
+
+        agent.reset_trip_odometer()
+
+        self.assertEqual(agent.trip_distance, 0.0)

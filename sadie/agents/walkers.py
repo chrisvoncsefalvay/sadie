@@ -147,3 +147,28 @@ class RapidHomesickLevyWalker(BaseWalker):
                     self.move()
                 else:
                     self.set_absolute_target(self.home_x, self.home_y)
+
+
+class VariableVelocityWalker(BaseWalker):
+    def __init__(self,
+                 x_init: float,
+                 y_init: float,
+                 velocity: float = 1.0,
+                 velocity_distribution: stats.rv_continuous = stats.norm,
+                 reflect = False,
+                 **kwargs):
+        super(VariableVelocityWalker, self).__init__(x_init=x_init, y_init=y_init, velocity=velocity)
+        self.velocity_distribution, self.kwargs = velocity_distribution, kwargs
+        self.reflect = reflect
+
+
+    def update(self):
+        _velocity = self.velocity_distribution(**self.kwargs).rvs()
+        if _velocity >= 0:
+            self.velocity = _velocity
+        else:
+            if self.reflect:
+                self.velocity = -1 * _velocity
+            else:
+                self.velocity = 0
+        super(VariableVelocityWalker, self).update()

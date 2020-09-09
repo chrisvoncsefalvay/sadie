@@ -7,8 +7,8 @@ except ImportError:
 import numpy as np
 from numpy import pi as π
 from sadie.agents.spatial import AgentStates
-from sadie.agents.walkers import BaseWalker, WaitingUniformWalker, UniformLevyRandomWalker, BoundedUniformLevyRandomWalker, HomesickLevyWalker, RapidHomesickLevyWalker
-from scipy.stats import beta
+from sadie.agents.walkers import BaseWalker, WaitingUniformWalker, UniformLevyRandomWalker, BoundedUniformLevyRandomWalker, HomesickLevyWalker, RapidHomesickLevyWalker, VariableVelocityWalker
+from scipy.stats import beta, uniform
 
 
 class TestBaseWalker(unittest.TestCase):
@@ -142,3 +142,29 @@ class TestHomesickLevyWalkers(unittest.TestCase):
         self.assertEqual(w.home_x, ix)
         self.assertEqual(w.home_y, iy)
         self.assertEqual(w.alpha, a)
+
+
+class TestVariableVelocityWalker(unittest.TestCase):
+    def test_retrieve_distribution(self):
+        w = VariableVelocityWalker(*np.random.randint(-100, 100, 2), reflect=True, velocity_distribution=beta, a=2, b=3)
+        self.assertTrue(w.reflect)
+        self.assertTrue(w.velocity_distribution, beta)
+        self.assertTrue(w.kwargs, {"a": 2, "b": 3})
+
+    def test_velocity_distribution_setting(self):
+        w = VariableVelocityWalker(*np.random.randint(-100, 100, 2), velocity=0, velocity_distribution=uniform, loc=10, scale=1)
+        self.assertEqual(w.velocity, 0)
+        w.update()
+        self.assertNotEqual(w.velocity, 0)
+        self.assertGreaterEqual(w.velocity, 9)
+        self.assertLessEqual(w.velocity, 11)
+
+    def test_reflecting_behaviour(self):
+        w = VariableVelocityWalker(*np.random.randint(-100, 100, 2), velocity=0, velocity_distribution=uniform, loc=0, scale=3)
+        w.update()
+        self.assertGreater(w.velocity, 0)
+
+    def test_capping_behaviour(self):
+        w = VariableVelocityWalker(*np.random.randint(-100, 100, 2), velocity=0, reflect=False, velocity_distribution=uniform, loc=0, scale=3)
+        w.update()
+        self.assertGreaterEqual(w.velocity, 0)

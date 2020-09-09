@@ -150,6 +150,13 @@ class RapidHomesickLevyWalker(BaseWalker):
 
 
 class VariableVelocityWalker(BaseWalker):
+    """
+    Variable velocity walkers have a velocity distributed based on a probability distribution, `velocity_distribution`.
+    In general, velocities cannot be negative. There are two behaviours, conditioned by the `reflect` parameter:
+
+    * reflection (`reflect = True`): if the random value from the distribution is negative, the absolute value is taken,
+    * capping (`reflect = True`): if the random value from the distribution is negative, 0 is used.
+    """
     def __init__(self,
                  x_init: float,
                  y_init: float,

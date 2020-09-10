@@ -219,7 +219,8 @@ class TargetableAgent(MovingSpatialAgent, TargetingMixin):
 
         :return: agent property dictionary
         """
-        return {"x": self.x,
+        return {"id": self.id,
+                "x": self.x,
                 "y": self.y,
                 "tx": self.target[0],
                 "ty": self.target[1],
